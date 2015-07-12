@@ -1,6 +1,11 @@
 
 		var clicks = 0; //Number of turns
+		var Player = 0; //checks which person's turn it is
+
 		var next = ""; //string to track where next player can go
+
+		var end = false; //Boolean to check if a small board was just finished
+		var game = false; //Variable to see if game is over
 
 		var fill = []; //Array to track status of each of the 81 squares
 		var over = []; //Array to check status of the 9 small boards
@@ -30,105 +35,106 @@
 		var wBR = 0;
 
 		var num; //Used to track which square is being selected
+		var num2; //Stores board number
 
 		//check5 is a helper function for check3 and 4 to see if a 3x3 board is filled
-		function check5(x, y){
+		function check5(x, z){
 			switch (x%9){
 					case 0:
-						if(fill[x] == fill[x+1] && fill[x] == fill[x+2]){
-							y = true;
+						if(z[x] == z[x+1] && z[x] == z[x+2]){
+							return true;
 						}
-						else if(fill[x] == fill[x+3] && fill[x] == fill[x+6]){
-							y = true;
+						else if(z[x] == z[x+3] && z[x] == z[x+6]){
+							return true;
 						}
-						else if(fill[x] == fill[x+4] && fill[x] == fill[x+8]){
-							y = true;
+						else if(z[x] == z[x+4] && z[x] == z[x+8]){
+							return true;
 						}
 						break;
 					case 1:
-						if(fill[x] == fill[x-1] && fill[x] == fill[x+1]){
-							y = true;
+						if(z[x] == z[x-1] && z[x] == z[x+1]){
+							return true;
 						}
-						else if(fill[x] == fill[x+3] && fill[x] == fill[x+6]){
-							y = true;
+						else if(z[x] == z[x+3] && z[x] == z[x+6]){
+							return true;
 						}
 						break;
 					case 2:
-						if(fill[x] == fill[x-1] && fill[x] == fill[x-2]){
-							y = true;
+						if(z[x] == z[x-1] && z[x] == z[x-2]){
+							return true;
 						}
-						else if(fill[x] == fill[x+3] && fill[x] == fill[x+6]){
-							y = true;
+						else if(z[x] == z[x+3] && z[x] == z[x+6]){
+							return true;
 						}
-						else if(fill[x] == fill[x+1] && fill[x] == fill[x+4]){
-							y = true;
+						else if(z[x] == z[x+2] && z[x] == z[x+4]){
+							return true;
 						}
 						break;
 					case 3:
-						if(fill[x] == fill[x+1] && fill[x] == fill[x+2]){
-							y = true;
+						if(z[x] == z[x+1] && z[x] == z[x+2]){
+							return true;
 						}
-						else if(fill[x] == fill[x+3] && fill[x] == fill[x-3]){
-							y = true;
+						else if(z[x] == z[x+3] && z[x] == z[x-3]){
+							return true;
 						}
 						break;
 					case 4:
-						if(fill[x] == fill[x+1] && fill[x] == fill[x-1]){
-							y = true;
+						if(z[x] == z[x+1] && z[x] == z[x-1]){
+							return true;
 						}
-						else if(fill[x] == fill[x+3] && fill[x] == fill[x-3]){
-							y = true;
+						else if(z[x] == z[x+3] && z[x] == z[x-3]){
+							return true;
 						}
-						else if(fill[x] == fill[x+4] && fill[x] == fill[x-4]){
-							y = true;
+						else if(z[x] == z[x+4] && z[x] == z[x-4]){
+							return true;
 						}
 						break;
 					case 5:
-						if(fill[x] == fill[x-1] && fill[x] == fill[x-2]){
-							y = true;
+						if(z[x] == z[x-1] && z[x] == z[x-2]){
+							return true;
 						}
-						else if(fill[x] == fill[x+3] && fill[x] == fill[x-3]){
-							y = true;
+						else if(z[x] == z[x+3] && z[x] == z[x-3]){
+							return true;
 						}
 						break;
 					case 6:
-						if(fill[x] == fill[x+1] && fill[x] == fill[x+2]){
-							y = true;
+						if(z[x] == z[x+1] && z[x] == z[x+2]){
+							return true;
 						}
-						else if(fill[x] == fill[x-6] && fill[x] == fill[x-3]){
-							y = true;
+						else if(z[x] == z[x-6] && z[x] == z[x-3]){
+							return true;
 						}
-						else if(fill[x] == fill[x-2] && fill[x] == fill[x-4]){
-							y = true;
+						else if(z[x] == z[x-2] && z[x] == z[x-4]){
+							return true;
 						}
 						break;
 					case 7:
-						if(fill[x] == fill[x+1] && fill[x] == fill[x-1]){
-							y = true;
+						if(z[x] == z[x+1] && z[x] == z[x-1]){
+							return true;
 						}
-						else if(fill[x] == fill[x-6] && fill[x] == fill[x-3]){
-							y = true;
+						else if(z[x] == z[x-6] && z[x] == z[x-3]){
+							return true;
 						}
 						break;
 					case 8:
-						if(fill[x] == fill[x-2] && fill[x] == fill[x-1]){
-							y = true;
+						if(z[x] == z[x-2] && z[x] == z[x-1]){
+							return true;
 						}
-						else if(fill[x] == fill[x-6] && fill[x] == fill[x-3]){
-							y = true;
+						else if(z[x] == z[x-6] && z[x] == z[x-3]){
+							return true;
 						}
-						else if(fill[x] == fill[x-4] && fill[x] == fill[x-8]){
-							y = true;
+						else if(z[x] == z[x-4] && z[x] == z[x-8]){
+							return true;
 						}
 						break;
-
-				}
+					default:
+						return false;
+			}
 		}
 
 		// check4 checks whether or not the entire board is finished
 		function check4(){
-			var game = false; //Variable to see if game is over
-			check5(num2, game);
+			game = check5(num2, over);
 			if(game){
 				if(Player == 0){
 					alert("WINNER: PLAYER 1");
@@ -140,11 +146,10 @@
 		}
 
 		// check3 checks whether or not the small board is finished and fills the over array
-		function check3(x){
-			var num2 = Math.floor(num/9); //Stores board number
-			var end = false; //Boolean to check if a small board was just finished
+		function check3(){
+			num2 = Math.floor(num/9); 
 			if(over[num2] == ""){
-				check5(num, end);
+				end = check5(num, fill);
 				if(end){
 					if(Player == 0){
 						over[num2] = "x";
@@ -193,7 +198,7 @@
 			else{
 				fill[num] = "o";
 			}
-			check3(x);
+			check3();
 		}
 
 		//firstClick adds the first turn's choice to the corresponding w variable
@@ -374,7 +379,7 @@ $("document").ready(
 		);
 		$(".col-xs-1").click(
 			function(){
-				var Player = clicks%2; //checks which person's turn it is
+				Player = clicks%2; 
 				if(!$(this).text().trim().length && Player == 0){
 					if(next==""){
 						$(this).text("x");
