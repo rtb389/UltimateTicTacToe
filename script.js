@@ -362,13 +362,15 @@ $("document").ready(
 	function(){
 		$(".col-xs-1").hover(
 			function(){
-				if(!$(this).text().trim().length){
-					if(next==""){
-						$(this).css("background-color", "yellow");
-					}
-					else{
-						if($(this).hasClass(next)){
+				if(!game){
+					if(!$(this).text().trim().length){
+						if(next==""){
 							$(this).css("background-color", "yellow");
+						}
+						else{
+							if($(this).hasClass(next)){
+								$(this).css("background-color", "yellow");
+							}
 						}
 					}
 				}
@@ -379,28 +381,30 @@ $("document").ready(
 		);
 		$(".col-xs-1").click(
 			function(){
-				Player = clicks%2; 
-				if(!$(this).text().trim().length && Player == 0){
-					if(next==""){
-						$(this).text("x");
-						returnClass(this);
-					}
-					else{
-						if($(this).hasClass(next)){
+				if(!game){
+					Player = clicks%2; 
+					if(!$(this).text().trim().length && Player == 0){
+						if(next==""){
 							$(this).text("x");
 							returnClass(this);
 						}
+						else{
+							if($(this).hasClass(next)){
+								$(this).text("x");
+								returnClass(this);
+							}
+						}
 					}
-				}
-				if(!$(this).text().trim().length && Player == 1){
-					if(next==""){
-						$(this).text("o");
-						returnClass(this);
-					}
-					else{
-						if($(this).hasClass(next)){
+					if(!$(this).text().trim().length && Player == 1){
+						if(next==""){
 							$(this).text("o");
-							returnClass(this);	
+							returnClass(this);
+						}
+						else{
+							if($(this).hasClass(next)){	
+								$(this).text("o");
+								returnClass(this);	
+							}
 						}
 					}
 				}
