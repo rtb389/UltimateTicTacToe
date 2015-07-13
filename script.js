@@ -216,23 +216,22 @@
 					}
 					break;
 				case "vertical":
-					switch ((num%9)%3){
-						case 0:
-							$(x + ".TL").addClass("vertical");
-							$(x + ".ML").addClass("vertical");
-							$(x + ".BL").addClass("vertical");
-							break;
-						case 1:
+					if (num%3 == 0){
+						$(x + ".TL").addClass("vertical");
+						$(x + ".ML").addClass("vertical");
+						$(x + ".BL").addClass("vertical");
+					}
+					else if(num%3 == 1){
 							$(x + ".TM").addClass("vertical");
 							$(x + ".MM").addClass("vertical");
 							$(x + ".BM").addClass("vertical");
-							break;
-						default:
-							$(x + ".TR").addClass("vertical");
-							$(x + ".MR").addClass("vertical");
-							$(x + ".BR").addClass("vertical");
-							break;
 					}
+					else{
+						$(x + ".TR").addClass("vertical");
+						$(x + ".MR").addClass("vertical");
+						$(x + ".BR").addClass("vertical");
+					}
+				break;
 			}
 		}
 
