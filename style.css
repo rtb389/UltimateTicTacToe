@@ -53,19 +53,23 @@
 
 .diagonal1{
 	background-image: url(diagonal_1.png);
-	background-size: cover;
+	background-size: 100%;
+	background-position: center;
 }
 .diagonal2{
 	background-image: url(diagonal_2.png);
 	background-size: cover;
+	background-position: center;
 }
 .horizontal{
 	background-image: url(horizontal.png);
 	background-size: cover;
+	background-position: center;
 }
 .vertical{
 	background-image: url(vertical.png);
 	background-size: cover;
+	background-position: center;
 }
 	
 
