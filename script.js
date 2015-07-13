@@ -71,7 +71,7 @@
 							return y[3];
 						}
 						else if(z[x] == z[x+2] && z[x] == z[x+4]){
-							return y[0];
+							return y[1];
 						}
 						break;
 					case 3:
