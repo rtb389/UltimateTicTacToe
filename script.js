@@ -9,6 +9,10 @@
 
 		var fill = []; //Array to track status of each of the 81 squares
 		var over = []; //Array to check status of the 9 small boards
+
+		//The below arrays are for use in check5
+		var line = ["diagonal1", "diagonal2", "horizontal", "vertical"];
+		var bool = ["true", "true", "true", "true"];
 		
 		/* Following functions fill parts of arrays used, to prevent 
 		possible error from calling on undefined variables */
@@ -38,103 +42,104 @@
 		var num2; //Stores board number
 
 		//check5 is a helper function for check3 and 4 to see if a 3x3 board is filled
-		function check5(x, z){
+		function check5(x, y, z){
 			switch (x%9){
 					case 0:
 						if(z[x] == z[x+1] && z[x] == z[x+2]){
-							return true;
+							return y[2];
 						}
 						else if(z[x] == z[x+3] && z[x] == z[x+6]){
-							return true;
+							return y[3];
 						}
 						else if(z[x] == z[x+4] && z[x] == z[x+8]){
-							return true;
+							return y[0];
 						}
 						break;
 					case 1:
 						if(z[x] == z[x-1] && z[x] == z[x+1]){
-							return true;
+							return y[2];
 						}
 						else if(z[x] == z[x+3] && z[x] == z[x+6]){
-							return true;
+							return y[3];
 						}
 						break;
 					case 2:
 						if(z[x] == z[x-1] && z[x] == z[x-2]){
-							return true;
+							return y[2];
 						}
 						else if(z[x] == z[x+3] && z[x] == z[x+6]){
-							return true;
+							return y[3];
 						}
 						else if(z[x] == z[x+2] && z[x] == z[x+4]){
-							return true;
+							return y[0];
 						}
 						break;
 					case 3:
 						if(z[x] == z[x+1] && z[x] == z[x+2]){
-							return true;
+							return y[2];
 						}
 						else if(z[x] == z[x+3] && z[x] == z[x-3]){
-							return true;
+							return y[3];
 						}
 						break;
 					case 4:
 						if(z[x] == z[x+1] && z[x] == z[x-1]){
-							return true;
+							return y[2];
 						}
 						else if(z[x] == z[x+3] && z[x] == z[x-3]){
-							return true;
+							return y[3];
 						}
 						else if(z[x] == z[x+4] && z[x] == z[x-4]){
-							return true;
+							return y[0];
+						}
+						else if(z[x] == z[x+2] && z[x] == z[x-2]){
+							return y[1];
 						}
 						break;
 					case 5:
 						if(z[x] == z[x-1] && z[x] == z[x-2]){
-							return true;
+							return y[2];
 						}
 						else if(z[x] == z[x+3] && z[x] == z[x-3]){
-							return true;
+							return y[3];
 						}
 						break;
 					case 6:
 						if(z[x] == z[x+1] && z[x] == z[x+2]){
-							return true;
+							return y[2];
 						}
 						else if(z[x] == z[x-6] && z[x] == z[x-3]){
-							return true;
+							return y[3];
 						}
 						else if(z[x] == z[x-2] && z[x] == z[x-4]){
-							return true;
+							return y[1];
 						}
 						break;
 					case 7:
 						if(z[x] == z[x+1] && z[x] == z[x-1]){
-							return true;
+							return y[2];
 						}
 						else if(z[x] == z[x-6] && z[x] == z[x-3]){
-							return true;
+							return y[3];
 						}
 						break;
 					case 8:
 						if(z[x] == z[x-2] && z[x] == z[x-1]){
-							return true;
+							return y[2];
 						}
 						else if(z[x] == z[x-6] && z[x] == z[x-3]){
-							return true;
+							return y[3];
 						}
 						else if(z[x] == z[x-4] && z[x] == z[x-8]){
-							return true;
+							return y[0];
 						}
 						break;
-					default:
-						return false;
 			}
 		}
 
 		// check4 checks whether or not the entire board is finished
 		function check4(){
-			game = check5(num2, over);
+			game = check5(num2, bool, over);
 			if(game){
 				if(Player == 0){
 					alert("WINNER: PLAYER 1");
@@ -145,11 +150,97 @@
 			}
 		}
 
+		//unCheck returns which of the large boards you are in
+		function unCheck(){
+			switch(Math.floor(num/9)){
+				case 0:
+					return ".wTL";
+					break;
+				case 1:
+					return ".wTM";
+					break;
+				case 2:
+					return ".wTR";
+					break;
+				case 3:
+					return ".wML";
+					break;
+				case 4:
+					return ".wMM";
+					break;
+				case 5:
+					return ".wMR";
+					break;
+				case 6:
+					return ".wBL";
+					break;
+				case 7:
+					return ".wBM";
+					break;
+				case 8:
+					return ".wBR";
+					break;
+			}
+		}
+
+		//addLine draws a line through a completed row/column/diagonal
+		function addLine(){
+			var x = unCheck();
+			var y = check5(num, line, fill);
+			switch (y){
+				case "diagonal1":
+					$(x + ".TL").addClass("diagonal1");
+					$(x + ".MM").addClass("diagonal1");
+					$(x + ".BR").addClass("diagonal1");
+					break;
+				case "diagonal2":
+					$(x + ".TR").addClass("diagonal2");
+					$(x + ".MM").addClass("diagonal2");
+					$(x + ".BL").addClass("diagonal2");
+					break;
+				case "horizontal":
+					if(num%9 < 3){
+						$(x + ".TL").addClass("horizontal");
+						$(x + ".TM").addClass("horizontal");
+						$(x + ".TR").addClass("horizontal");
+					}
+					else if(num%9 < 6){
+						$(x + ".ML").addClass("horizontal");
+						$(x + ".MM").addClass("horizontal");
+						$(x + ".MR").addClass("horizontal");
+					}
+					else{
+						$(x + ".BL").addClass("horizontal");
+						$(x + ".BM").addClass("horizontal");
+						$(x + ".BR").addClass("horizontal");
+					}
+					break;
+				case "vertical":
+					switch ((num%9)%3){
+						case 0:
+							$(x + ".TL").addClass("vertical");
+							$(x + ".ML").addClass("vertical");
+							$(x + ".BL").addClass("vertical");
+							break;
+						case 1:
+							$(x + ".TM").addClass("vertical");
+							$(x + ".MM").addClass("vertical");
+							$(x + ".BM").addClass("vertical");
+							break;
+						default:
+							$(x + ".TR").addClass("vertical");
+							$(x + ".MR").addClass("vertical");
+							$(x + ".BR").addClass("vertical");
+							break;
+					}
+			}
+		}
+
 		// check3 checks whether or not the small board is finished and fills the over array
 		function check3(){
 			num2 = Math.floor(num/9); 
 			if(over[num2] == ""){
-				end = check5(num, fill);
+				end = check5(num, bool, fill);
 				if(end){
 					if(Player == 0){
 						over[num2] = "x";
@@ -158,6 +249,7 @@
 						over[num2] = "o";
 					}
 					end = false;
+					addLine();
 					check4();
 				}
 			}

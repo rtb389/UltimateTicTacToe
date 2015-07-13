@@ -51,4 +51,21 @@
 	border-bottom-color: black;
 }
 
+.diagonal1{
+	background-image: url(diagonal_1.png);
+	background-size: cover;
+}
+.diagonal2{
+	background-image: url(diagonal_2.png);
+	background-size: cover;
+}
+.horizontal{
+	background-image: url(horizontal.png);
+	background-size: cover;
+}
+.vertical{
+	background-image: url(vertical.png);
+	background-width: cover;
+}
+
 
